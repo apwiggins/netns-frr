@@ -1,0 +1,21 @@
+#!/usr/bin/env bash
+
+# Configuration paths based on your working pattern
+BASE_CONF="/tmp/etc/frr"
+BASE_RUN="/var/run/frr"
+COMMAND="show ip ro"
+
+echo "### FRR MULTI-INSTANCE CONFIGURATION REPORT"
+
+for i in {1..5}; do
+    NS="ns$i"
+    echo "## NAMESPACE: $NS"
+
+    # Execute the show running-config command using your verified path logic
+    if ! sudo ip netns exec "$NS" vtysh -N "$NS" \
+        --vty_socket "$BASE_RUN/" \
+        --config_dir "$BASE_CONF/" \
+        -c "$COMMAND"; then
+        echo "ERROR: Could not connect to FRR instance in $NS"
+    fi
+done
