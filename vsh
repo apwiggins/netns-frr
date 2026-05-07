@@ -9,7 +9,7 @@ RUN_DIR="/var/run/frr"
 
 # Check if the namespace exists
 if [ -z "$NS" ] || ! ip netns list | grep -q "$NS"; then
-    echo "Usage: nvtysh <namespace_name> [-c \"command\"]"
+    echo "Usage: vsh <namespace_name> [-c \"command\"]"
     exit 1
 fi
 
